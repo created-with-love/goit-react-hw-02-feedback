@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import s from './Feedback.module.css';
-import Controls from './FeedbackOptions.jsx';
+import FeedBackOptions from './FeedBackOptions';
 import Statistics from './Statistics';
 import Notification from './Notification';
+import Section from './Section';
 
 class Feedback extends Component {
   static defaultProps = {
@@ -16,77 +17,49 @@ class Feedback extends Component {
     good: this.props.initialValue,
     neutral: 0,
     bad: 0,
-    total: 0,
-    percent: 0,
   };
 
-  handleGoodBtn = () => {
-    // изменять состояния напрямую нельзя
-    // this.state.good = 5; XXX
+  onLeaveFeedback = option => {
     this.setState(prevState => {
       return {
-        good: prevState.good + 1,
+        [option]: prevState[option] + 1,
       };
     });
-    this.countTotalFeedback();
-    this.countPositiveFeedbackPercentage();
-  };
-
-  handleNeutralBtn = () => {
-    this.setState(prevState => {
-      return {
-        neutral: prevState.neutral + 1,
-      };
-    });
-    this.countTotalFeedback();
-    this.countPositiveFeedbackPercentage();
-  };
-
-  handleBadBtn = () => {
-    this.setState(prevState => {
-      return {
-        bad: prevState.bad + 1,
-      };
-    });
-    this.countTotalFeedback();
-    this.countPositiveFeedbackPercentage();
   };
 
   countTotalFeedback = () => {
-    this.setState(prevState => {
-      return {
-        total: prevState.good + prevState.bad + prevState.neutral,
-      };
-    });
+    return this.state.good + this.state.bad + this.state.neutral;
   };
 
   countPositiveFeedbackPercentage = () => {
-    this.setState(prevState => {
-      return {
-        percent: Math.floor((prevState.good / prevState.total) * 100),
-      };
-    });
+    return Math.floor((this.state.good / this.countTotalFeedback()) * 100);
   };
 
   render() {
-    const { good, neutral, bad, total, percent } = this.state;
+    const { good, neutral, bad } = this.state;
+    const total = this.countTotalFeedback();
+    const percent = this.countPositiveFeedbackPercentage();
+    const stateArray = Object.keys(this.state);
+
     return (
       <>
-        <h1>Please leave feedback</h1>
-
-        <Controls
-          onHandleGoodBtn={this.handleGoodBtn}
-          onHandleNeutralBtn={this.handleNeutralBtn}
-          onHandleBadBtn={this.handleBadBtn}
-        />
-        {good > 0 || neutral > 0 || bad > 0 ? (
-          <Statistics
-            good={good}
-            neutral={neutral}
-            bad={bad}
-            total={total}
-            percent={percent}
+        <Section title="Please leave feedback">
+          <FeedBackOptions
+            options={stateArray}
+            onLeaveFeedback={this.onLeaveFeedback}
           />
+        </Section>
+
+        {good > 0 || neutral > 0 || bad > 0 ? (
+          <Section title="Statistics">
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={total}
+              percent={percent}
+            />
+          </Section>
         ) : (
           <Notification message="No feedback given" />
         )}

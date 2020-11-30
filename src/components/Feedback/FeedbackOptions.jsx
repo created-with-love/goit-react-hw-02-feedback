@@ -1,17 +1,18 @@
 import React from 'react';
+let buttonsId = 1;
 
-const Controls = ({ onHandleGoodBtn, onHandleNeutralBtn, onHandleBadBtn }) => (
+const FeedBackOptions = ({ options, onLeaveFeedback }) => (
   <div className="feedback__controls">
-    <button type="button" onClick={onHandleGoodBtn}>
-      Good
-    </button>
-    <button type="button" onClick={onHandleNeutralBtn}>
-      Neutral
-    </button>
-    <button type="button" onClick={onHandleBadBtn}>
-      Bad
-    </button>
+    {options.map((element, index) => (
+      <button
+        key={buttonsId + index}
+        type="button"
+        onClick={() => onLeaveFeedback(element)}
+      >
+        {element.slice(0, 1).toUpperCase() + element.slice(1)}
+      </button>
+    ))}
   </div>
 );
 
-export default Controls;
+export default FeedBackOptions;

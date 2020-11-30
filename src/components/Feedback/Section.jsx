@@ -1,5 +1,10 @@
 import React from 'react';
 
-const Section = ({ title }) => <h2>{title}</h2>;
+const Section = ({ title, children }) => (
+  <>
+    <h2>{title}</h2>
+    {children}
+  </>
+);
 
 export default Section;
