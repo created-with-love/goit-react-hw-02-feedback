@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import s from './Feedback.module.css';
-import FeedBackOptions from './FeedBackOptions';
-import Statistics from './Statistics';
-import Notification from './Notification';
-import Section from './Section';
+import FeedBackOptions from '../FeedbackOptions/FeedBackOptions';
+import Statistics from '../Statistics/Statistics';
+import Notification from '../Notification/Notification';
+import Section from '../Section/Section';
 
 class Feedback extends Component {
   static defaultProps = {
