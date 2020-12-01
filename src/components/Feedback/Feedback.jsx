@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import s from './Feedback.module.css';
 import FeedBackOptions from '../FeedbackOptions/FeedBackOptions';
 import Statistics from '../Statistics/Statistics';
 import Notification from '../Notification/Notification';

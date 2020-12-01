@@ -3,6 +3,7 @@
 }
 
 .feedback__button {
+  font-family: 'Roboto', sans-serif;
   padding: 5px 9px 5px 9px;
   border: 1px solid gray;
   border-radius: 6px;
