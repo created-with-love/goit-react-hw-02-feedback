@@ -19,19 +19,20 @@ class Feedback extends Component {
   };
 
   onLeaveFeedback = option => {
-    this.setState(prevState => {
-      return {
-        [option]: prevState[option] + 1,
-      };
-    });
+    this.setState(prevState => ({
+      [option]: prevState[option] + 1,
+    }));
   };
 
   countTotalFeedback = () => {
-    return this.state.good + this.state.bad + this.state.neutral;
+    const { good, bad, neutral } = this.state;
+    return good + bad + neutral;
   };
 
   countPositiveFeedbackPercentage = () => {
-    return Math.floor((this.state.good / this.countTotalFeedback()) * 100);
+    const { good } = this.state;
+    const total = this.countTotalFeedback();
+    return total ? Math.floor((good / total) * 100) : 0;
   };
 
   render() {
@@ -49,7 +50,7 @@ class Feedback extends Component {
           />
         </Section>
 
-        {good > 0 || neutral > 0 || bad > 0 ? (
+        {total !== 0 ? (
           <Section title="Statistics">
             <Statistics
               good={good}

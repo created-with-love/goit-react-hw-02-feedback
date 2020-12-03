@@ -1,15 +1,14 @@
 import React from 'react';
 import s from './FeedbackOptions.module.css';
 import PropTypes from 'prop-types';
-
-let buttonsId = 1;
+import { v4 as uuidv4 } from 'uuid';
 
 const FeedBackOptions = ({ options, onLeaveFeedback }) => (
   <div className={s.feedback__controls}>
-    {options.map((element, index) => (
+    {options.map(element => (
       <button
         className={s.feedback__button}
-        key={buttonsId + index}
+        key={uuidv4()}
         type="button"
         onClick={() => onLeaveFeedback(element)}
       >
@@ -21,7 +20,7 @@ const FeedBackOptions = ({ options, onLeaveFeedback }) => (
 
 FeedBackOptions.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string),
-  onLeaveFeedback: PropTypes.func,
+  onLeaveFeedback: PropTypes.func.isRequired,
 };
 
 export default FeedBackOptions;
